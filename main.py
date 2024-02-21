@@ -17,12 +17,17 @@ def main():
     all_characters = []
     for character in data.keys():
         all_characters.append(character)
+        
+    dropDownFrame = ctk.CTkFrame(win, fg_color="gray")
     
-    charDropDownLeft = ctk.CTkOptionMenu(win, values=all_characters)
-    charDropDownLeft.grid(row=0, column=0)
+    charDropDownLeft = ctk.CTkOptionMenu(dropDownFrame, values=all_characters)
+    charDropDownLeft.grid(row=0, column=0, columnspan=2, sticky="e", padx=30)
 
-    charDropDownRight = ctk.CTkOptionMenu(win, values=all_characters)
-    charDropDownRight.grid(row=0, column=1)
+    charDropDownRight = ctk.CTkOptionMenu(dropDownFrame, values=all_characters)
+    charDropDownRight.grid(row=0, column=2, columnspan=2, sticky="w", padx=30)
+    
+    dropDownFrame.pack()
+    
 
     char = c.hero("Baptiste")
     print(char)
