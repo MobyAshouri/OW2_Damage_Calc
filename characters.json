@@ -1,0 +1,58 @@
+{
+    "ana": {
+        "weapon": {
+            "name": "Biotic Rifle",
+            "damage": 70,
+            "healing": 70,
+            "reload time": 1.5
+        },
+        "a1": {
+            "name": "Sleep Dart",
+            "damage": 5
+        },
+        "a2": {
+            "name": "Biotic Grenade",
+            "damage": 60,
+            "healing": 60
+        }
+        
+    },
+
+    "ashe": {
+        "weapon": {
+            "name": "The Viper",
+            "damage": 75,
+            "healing": 0,
+            "reload time": 2.9
+        },
+        "a1": {
+            "name": "Dynamite",
+            "damage": 50
+        },
+        "a2": {
+            "name": "Coach Gun",
+            "damage": 90
+        }
+        
+    },
+
+    "Baptiste": {
+        "weapon": {
+            "name": "Biotic Launcher",
+            "damage": 25,
+            "reload time": 1.5
+        },
+        "a1": {
+            "name": "Biotic Launcher Alternate Fire",
+            "healing": 50
+        },
+        "a2": {
+            "name": "Regenerative Burst",
+            "healing": 80
+        },
+        "a3": {
+            "name": "Immortality Field"
+        }
+        
+    }
+}
