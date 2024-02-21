@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import re
 
 headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"} 
 
@@ -17,24 +16,24 @@ def getAllHeroesList() -> list[str]:
     """
     
     URL = "https://overwatch.fandom.com/wiki/Heroes#Hero_roster"
-    r = requests.get(URL)
+    r = requests.get(URL)                                                   # get request for the Overwatch Heroes roster URL
     
-    soup = BeautifulSoup(r.content, "html5lib")
-    table = soup.find('table', class_='listtable collapsible')
+    soup = BeautifulSoup(r.content, "html5lib")                             # create soup from the request
+    table = soup.find('table', class_='listtable collapsible')              # find the table which includes all the characters
     
-    if table:
-        rows = table.find_all('tr')
-        numOfChars = len(rows)-1
+    if table:                                                               # if the table exists
+        rows = table.find_all('tr')                                         # extract all rows from the table
+        numOfChars = len(rows)-1                                            # get the number of rows (subtract 1 because it includes the table header)
         
-        listOfChars = []
-        for i in range(0, numOfChars):
-            cells = rows[i].find_all('td')
-            if cells:
-                listOfChars.append(cells[2].text.strip())
+        listOfChars = []                                                    # create an empty list of characters
+        for i in range(0, numOfChars):                                      # for each character...
+            cells = rows[i].find_all('td')                                  # find all the cells associated with that character in the table
+            if cells:                                                       # if those cells exist
+                listOfChars.append(cells[2].text.strip())                   # take the second column of the row, strip it into plain text, and append to our list
                 
-    return listOfChars
+    return listOfChars                                                      # return our complete list of characters based on the wiki
 
-def formatAbilityNames(input_string) -> str:
+def formatAbilityNames(inputString) -> str:
     """
     ## Function
         Formats ability names. The webScrapWiki() function doesn't
@@ -63,19 +62,19 @@ def formatAbilityNames(input_string) -> str:
         The formatted version of your string
     """
     
-    length = len(input_string)
-    newString=''
+    length = len(inputString)+1                                             # get the length of inputString (tiny optimization for our upcoming loop)
+    newString=''                                                            # create an empty string, which will be our return
     
-    stopSearchingForCaps = True
-    for i in range(length+1):
-        if input_string[-1*i].isupper():
-            if stopSearchingForCaps:
-                pass
-            else:
-                newString+=input_string[-1*i]
-        else:
-            newString+=input_string[-1*i]
-            stopSearchingForCaps=False
+    stopSearchingForCaps = True                                             # create a boolean which indicates when we need to begin returning values
+    for i in range(length):                                                 # run {length} number of times
+        if inputString[-1*i].isupper():                                     # starting from the end of the string, if the character is capital...
+            if stopSearchingForCaps:                                            # and if stopSearchForCaps is still True....
+                pass                                                                # ignore this character and move on to the next one
+            else:                                                               # if stopSearchForCaps is False...
+                newString+=inputString[-1*i]                                        # add this character to our return string
+        else:                                                               # if our character isn't capital....
+            newString+=inputString[-1*i]                                        # add the character to our return string
+            stopSearchingForCaps=False                                          # also, set stopSearchingForCaps to False
 
     return newString[::-1]
 
