@@ -5,6 +5,17 @@ import re
 headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"} 
 
 def getAllHeroesList() -> list[str]:
+    """
+    ## Function
+        Webscrapes "https://overwatch.fandom.com/wiki/Heroes#Hero_roster" to get all hero names
+        
+    ## Params
+        None
+        
+    ## Returns
+        `listOfChars: list(str)` | A list of all the character names
+    """
+    
     URL = "https://overwatch.fandom.com/wiki/Heroes#Hero_roster"
     r = requests.get(URL)
     
@@ -23,8 +34,35 @@ def getAllHeroesList() -> list[str]:
                 
     return listOfChars
 
-def formatAbilityNames(input_string):
-    #return re.sub(r'(\S[A-Z])', '', input_string)
+def formatAbilityNames(input_string) -> str:
+    """
+    ## Function
+        Formats ability names. The webScrapWiki() function doesn't
+        easily grab ability names: the default keyboard is also
+        concatenated to the ability name. Luckily, the keybind is always
+        in all caps.
+        
+        This function removes all capitals letters from the end of a
+        string until it meets a lowercase letter. It then returns the
+        rest of the string.
+        
+    ## Example Usage
+        ```python
+        string = "BlinkLSHIFT"
+        newString = formatAbilityNames(newString)
+        print(newString)
+        
+        >> Blink
+        ```
+        
+    ## Params
+        `input_string`: (str)
+            The string you want to format
+        
+    ## Returns
+        The formatted version of your string
+    """
+    
     length = len(input_string)
     newString=''
     
@@ -43,6 +81,22 @@ def formatAbilityNames(input_string):
 
 
 def webScrapeWiki():
+    """
+    ## Function
+        Webscrapes the Overwatch Fandom Wiki. It essentially updates
+        a database which behaves as an API for the time being. It scrapes for:
+        - characters + abilities
+        - damage values
+        - health values
+     
+        It essentially updates the working database/API.
+        
+    ## Params
+        None
+        
+    ## Returns
+        None
+    """
     roster = getAllHeroesList()
     
     for hero in roster:
