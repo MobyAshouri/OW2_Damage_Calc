@@ -11,10 +11,13 @@ from webscrape import getAllHeroesList
 
 
 def main():
+    ctk.set_default_color_theme("theme.json")
 
     win = ctk.CTk()
     win.geometry("600x600")
     win.resizable(False, False)
+    win.title("Overwatch 2 Damage Calculator")
+    win.iconbitmap("icons/icon.ico")
 
     charList = getAllHeroesList()
     charList.sort()
@@ -23,7 +26,7 @@ def main():
     for character in charList:
         all_characters.append(character)
         
-    dropDownFrame = ctk.CTkFrame(win, fg_color="gray")
+    dropDownFrame = ctk.CTkFrame(win)
     
     charDropDownLeft = ctk.CTkOptionMenu(dropDownFrame, values=all_characters, command=lambda event: changeLeftImage(event, charDropDownLeft, leftCharImageLabel))
     charDropDownLeft.grid(row=0, column=0, columnspan=2, sticky="e", padx=50)
@@ -31,7 +34,7 @@ def main():
     charDropDownRight = ctk.CTkOptionMenu(dropDownFrame, values=all_characters, command=lambda event: changeRightImage(event, charDropDownRight, rightCharImageLabel))
     charDropDownRight.grid(row=0, column=2, columnspan=2, sticky="w", padx=30)
     
-    dropDownFrame.pack()
+    dropDownFrame.pack(pady=10)
     
     charFrame = ctk.CTkFrame(win)
     
