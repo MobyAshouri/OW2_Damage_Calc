@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup
+from unidecode import unidecode
+import re
 import requests
 
 headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"} 
@@ -29,7 +31,7 @@ def getAllHeroesList() -> list[str]:
         for i in range(0, numOfChars):                                      # for each character...
             cells = rows[i].find_all('td')                                  # find all the cells associated with that character in the table
             if cells:                                                       # if those cells exist
-                listOfChars.append(cells[2].text.strip())                   # take the second column of the row, strip it into plain text, and append to our list
+                listOfChars.append(re.sub(r'[:0-9\s]', '', unidecode(cells[2].text.strip())))                   # take the second column of the row, strip it into plain text, and append to our list
                 
     return listOfChars                                                      # return our complete list of characters based on the wiki
 
@@ -112,5 +114,3 @@ def webScrapeWiki():
         print(abilityNames)
         
         #TODO
-        
-webScrapeWiki()

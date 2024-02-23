@@ -6,7 +6,8 @@ import customtkinter as ctk
 from tkinter import ttk
 import character as c
 
-from UI_functions import changeLeftImage
+from UI_functions import changeLeftImage, changeRightImage
+from webscrape import getAllHeroesList
 
 
 def main():
@@ -15,11 +16,11 @@ def main():
     win.geometry("600x600")
     win.resizable(False, False)
 
-    with open("characters.json", "r") as file:
-        data = json.load(file)
+    charList = getAllHeroesList()
+    charList.sort()
 
     all_characters = []
-    for character in data.keys():
+    for character in charList:
         all_characters.append(character)
         
     dropDownFrame = ctk.CTkFrame(win, fg_color="gray")
@@ -27,7 +28,7 @@ def main():
     charDropDownLeft = ctk.CTkOptionMenu(dropDownFrame, values=all_characters, command=lambda event: changeLeftImage(event, charDropDownLeft, leftCharImageLabel))
     charDropDownLeft.grid(row=0, column=0, columnspan=2, sticky="e", padx=50)
 
-    charDropDownRight = ctk.CTkOptionMenu(dropDownFrame, values=all_characters)
+    charDropDownRight = ctk.CTkOptionMenu(dropDownFrame, values=all_characters, command=lambda event: changeRightImage(event, charDropDownRight, rightCharImageLabel))
     charDropDownRight.grid(row=0, column=2, columnspan=2, sticky="w", padx=30)
     
     dropDownFrame.pack()
