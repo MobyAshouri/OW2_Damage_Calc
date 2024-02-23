@@ -7,7 +7,7 @@ cred = credentials.Certificate('Secrets/ServiceAccountKey.json')
 default_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-def writeToDB(col: str, doc: str, data:dict):
+def writeToDB(col: str, doc: str, data: dict):
     '''
     ## Function
     Writes data to Database. This overwrites previous data stored at the given location.
@@ -38,8 +38,7 @@ def writeToDB(col: str, doc: str, data:dict):
 def readFromDB(col: str, doc: str):
     '''
     ## Function
-    Reads data from Database. This overwrites previous data stored at the given location.
-    col and doc are used to specify a location within the database.
+    Reads data from Database. `col` and `doc` are used to specify a location within the database.
 
     ## Parameters
     col (str): 
@@ -47,9 +46,6 @@ def readFromDB(col: str, doc: str):
 
     doc (str):
         used to specify the Database's document within the collection
-
-    data (dict):
-        Data to read from the Database
 
     ## Returns
         Requested Data at the specified location
@@ -66,15 +62,11 @@ def readFromDB(col: str, doc: str):
 def appendCharacterToDB(charName: str, data:dict):
     '''
     ## Function
-    Appends data to Database. This overwrites previous data stored at the given location.
-    col and doc are used to specify a location within the database.
+    Appends data to Database.
 
     ## Parameters
-    col (str): 
-        used to specify the Database's collection
-
-    doc (str):
-        used to specify the Database's document within the collection
+    charName (str): 
+        the character's name to be added or appended to the database
 
     data (dict):
         Data to append to the Database
@@ -83,13 +75,13 @@ def appendCharacterToDB(charName: str, data:dict):
         None
         
     '''
-    # grab existing data
+    # grab existing data for THAT character
     try:
         information = readFromDB("characters", charName)
-    except:     # if the data doesn't exist, make an empty dictionary
+    except:     # if the data doesn't exist, (character isn't in db) make an empty dictionary
         information = {}
         
-    # update the existing data with new incoming data
+    # update the existing character data with new incoming data
     information.update(data)
     # write that data back to the db
     writeToDB("characters", charName, information)
